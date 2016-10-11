@@ -5,8 +5,6 @@
       "service_type": "open"
     }
   ],
-  "requires_services": [
-  ],
   "name": "Spaceify Event Channel",
   "unique_name": "spaceify/eventchannel",
   "version": "0.1.0",
