@@ -1,0 +1,28 @@
+{
+  "provides_services": [
+    {
+      "service_name": "spaceify.org/services/eventchannel",
+      "service_type": "open"
+    }
+  ],
+  "requires_services": [
+  ],
+  "name": "Spaceify Event Channel",
+  "unique_name": "spaceify/eventchannel",
+  "version": "0.1.0",
+  "type": "sandboxed",
+  "category": "core",
+  "start_command": "node eventchannel.js",
+  "implements": [
+    "WEB_SERVER"
+  ],
+  "developer": {
+    "name": "Spaceify Oy",
+    "email": "admin@spaceify.net",
+    "url": "http://spaceify.net"
+  },
+  "short_description": "The EventChannel for Spaceify.",
+  "appstore_description": "The Event Channel for Spaceify. Can be used for implementing simple/complex event processing functionality.",
+  "license": "MIT",
+  "creation_date": "2016-10-06 17:20:00"
+}
