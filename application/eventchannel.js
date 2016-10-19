@@ -44,9 +44,9 @@ self.onClientDisconnected = function(connectionId)
 // is generated. When the EventListener is triggered, the RPC function with callbackName
 // should be called on the application that added this event listener.
 
-self.addEventListener = function(eventFilter, callbackName)
+self.addEventListener = function(eventFilter, callbackName, callObj, callback)
 	{
-	var listener = {filter: eventFilter, connectionId: arguments[arguments.length - 1].connectionId, callbackName: callbackName};
+	var listener = {filter: eventFilter, connectionId: callObj.connectionId, callbackName: callbackName};
 
 	// ToDo: check duplicates?
 
@@ -56,17 +56,24 @@ self.addEventListener = function(eventFilter, callbackName)
 	if(!listenersByEventName.hasOwnProperty(eventFilter.name))					// Multiple clients can listen to the same event
 		listenersByEventName[eventFilter.name] = [];
 	listenersByEventName[eventFilter.name].push(listener);
+	
+	callback(null,"Ok");
 	};
 
 // Generates (= emits) event on this eventChannel. Triggers all eventListeners, the filter of
 // which matches the eventObject
 
-self.generateEvent = function(eventObject)
+self.generateEvent = function(eventObject, callObj, callback)
 	{
 	// Find mathcing eventListeners for this eventObject
 
 	// Implement first exact matching of the event name,
 	// More complex filters will be added later!
+
+	console.log("generateEvent");
+	console.log(eventObject);
+	console.log(callObj);
+	console.log(callback);
 
 	if (listenersByEventName.hasOwnProperty(eventObject.name))
 		{
@@ -78,18 +85,24 @@ self.generateEvent = function(eventObject)
 			eventChannelService.callRpc(lis[i].callbackName, [eventObject], null, null, lis[i].connectionId);
 			}
 		}
+		
+	callback(null, "Ok");
 	};
 
 	// Remember to IMPLEMENT start AND fail METHODS IN YOUR APPLICATION!!! -- -- -- -- //
 self.start = function()
 	{
 	// PROVIDED - CONNECTIONS FROM CLIENTS TO US
+	console.log("EventChannel::start()");
 	eventChannelService = spaceify.getProvidedService("spaceify.org/services/eventchannel");
-
+	console.log("EventChannel::start() got provided service");
+	
 	eventChannelService.exposeRpcMethod("addEventListener", self, self.addEventListener);
 	eventChannelService.exposeRpcMethod("generateEvent", self, self.generateEvent);
-
-	eventChannelService.setDisconnectionListener(onClientDisconnected);
+	console.log("EventChannel::start() rpc methods exposed");
+	
+	eventChannelService.setDisconnectionListener(self.onClientDisconnected);
+	console.log("EventChannel::start() end");
 	};
 
 self.fail = function()
