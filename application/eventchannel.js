@@ -23,7 +23,7 @@ self.onClientDisconnected = function(connectionId)
 	{
 	for(var name in listenersByEventName)										// Go through all the listener by event name
 		{
-		for(var i = 0; i < listenersByEventName[name].length; i++)				// and try to find the listeners with the connectionId
+		for(var i = listenersByEventName[name].length - 1; i >= 0; i--)			// and try to find the listeners with the connectionId
 			{
 			if(listenersByEventName[name][i].connectionId == connectionId)
 				listenersByEventName[name].splice(i, 1);
@@ -33,7 +33,7 @@ self.onClientDisconnected = function(connectionId)
 			delete listenersByEventName[name];
 		}
 
-	for(var i = 0; i < listeners.length; i++)									// Delete the listeners from here too						
+	for(var i = listeners.length - 1; i >= 0; i--)								// Delete the listeners from here too						
 		{
 		if(listeners[i].connectionId == connectionId)
 			listeners.splice(i, 1);
@@ -45,7 +45,7 @@ self.onClientDisconnected = function(connectionId)
 // should be called on the application that added this event listener.
 
 self.addEventListener = function(eventFilter, callbackName, callObj, callback)
-	{
+	{	
 	var listener = {filter: eventFilter, connectionId: callObj.connectionId, callbackName: callbackName};
 
 	// ToDo: check duplicates?
@@ -56,7 +56,7 @@ self.addEventListener = function(eventFilter, callbackName, callObj, callback)
 	if(!listenersByEventName.hasOwnProperty(eventFilter.name))					// Multiple clients can listen to the same event
 		listenersByEventName[eventFilter.name] = [];
 	listenersByEventName[eventFilter.name].push(listener);
-	
+
 	callback(null,"Ok");
 	};
 
