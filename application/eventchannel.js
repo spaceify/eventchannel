@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * EventChannel, 6.10.2016 Spaceify Oy
+ * EventChannel, 22.10.2016 Spaceify Oy
  *
  * @class EventChannel
  */

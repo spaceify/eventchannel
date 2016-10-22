@@ -1,1 +1,1 @@
-# eventchannel
+# Event Channel for Spaceify Edge Platform
