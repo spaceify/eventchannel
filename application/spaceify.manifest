@@ -7,7 +7,7 @@
   ],
   "name": "Spaceify Event Channel",
   "unique_name": "spaceify/eventchannel",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "sandboxed",
   "category": "driver",
   "start_command": "node eventchannel.js",
